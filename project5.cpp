@@ -7,6 +7,8 @@
 
 using namespace std;
 
+//random comment
+
 //helper functions
 void getInfo(int,int,int);
 string getLetter(float);
