@@ -41,19 +41,19 @@ void importStudents(string array[][2][2][2][6])
 {
 
 	//get student info
-	for( int a = 0 ; a < 1 ; a++)
+	for( int a = 0 ; a < 2 ; a++)
 	{
 
-	  for( int b = 0 ; b < 1 ; b++)
+	  for( int b = 0 ; b < 2 ; b++)
 	  {
 
-	    for( int c = 0 ; c < 1 ; c++)
+	    for( int c = 0 ; c < 2 ; c++)
 	    {
 
 	    //grab appropriate headings
 	    getInfo(a,b,c);
 
-	    for( int d = 0 ; d < 1 ; d++)
+	    for( int d = 0 ; d < 2 ; d++)
 
 	    {
 
@@ -70,7 +70,7 @@ void importStudents(string array[][2][2][2][6])
 	    //get name
 	    string tempName;
 	    cout << "Student name?" << endl;
-	    getline(cin,tempName);
+	    cin >> tempName;
 	    array[a][b][c][d][3] = tempName;
 	    ofsImport << tempName << endl;
 
@@ -144,19 +144,19 @@ void exportStudents(string array[][2][2][2][6])
 {
 
 	//output info with appropriate labelling.
-	for( int a = 0 ; a < 1 ; a++)
+	for( int a = 0 ; a < 2 ; a++)
 	{
 
-	  for( int b = 0 ; b < 1 ; b++)
+	  for( int b = 0 ; b < 2 ; b++)
 	  {
 
-	    for( int c = 0 ; c < 1 ; c++)
+	    for( int c = 0 ; c < 2 ; c++)
 	    {
 
 	    //grab appropriate headings
 	    getInfo(a,b,c);
 
-	    for( int d = 0; d < 1 ; d++)
+	    for( int d = 0; d < 2 ; d++)
 
 	    {
 
