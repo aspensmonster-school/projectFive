@@ -10,149 +10,170 @@ using namespace std;
 //random comment
 
 //helper functions
+void importStudents(string[2][2][2][2][7]);
+void exportStudents(string[2][2][2][2][7]);
 void getInfo(int,int,int);
 string getLetter(float);
+bool verify(string);
+bool verify(double);
 
 //global info
 static string college,department,professor;
-
-static ofstream ofs;
+static ofstream ofsImport;
+static ofstream ofsExport;
+string array [2][2][2][2][7] = { "\0" } ;
 
 int main()
 {
 
-string array [2][2][2][2][7] = { "\0" } ;
-ofs.open("output.txt");
+ofsImport.open("input.txt");
+ofsExport.open("output.txt");
 
-//get student info
-for( int a = 0 ; a < 2 ; a++)
-{
+importStudents(array);
+exportStudents(array);
 
-  for( int b = 0 ; b < 2 ; b++)
-  {
-
-    for( int c = 0 ; c < 2 ; c++)
-    {
-    
-    //grab appropriate headings
-    getInfo(a,b,c);
-
-    for( int d = 0 ; d < 2 ; d++)
-    
-    {
-
-    //display the branch we're collecting student data for
-    cout << "College: " << college << "\n"
-         << "Department: " << department << "\n"
-         << "Professor: " << professor << "\n"; 
-
-    //grab info for the branch
-    cout << "Student name?" << endl;
-    cin >> array[a][b][c][d][0];
-    cout << "Student Social social?" << endl;
-    cin >> array[a][b][c][d][1];
-    
-    //first grade
-    array[a][b][c][d][2]="200";
-    while(atof(array[a][b][c][d][2].c_str()) > 100 || atof(array[a][b][c][d][2].c_str()) < 0 )
-    {
-    cout << "First test grade." << endl;
-    cin >> array[a][b][c][d][2];
-    }
-
-    //second grade
-    array[a][b][c][d][3]="200";
-    while(atof(array[a][b][c][d][3].c_str()) > 100 || atof(array[a][b][c][d][3].c_str()) < 0 )
-    {
-    cout << "Second test grade." << endl;
-    cin >> array[a][b][c][d][3];
-    }
-
-    //final grade
-    array[a][b][c][d][4]="200";
-    while(atof(array[a][b][c][d][4].c_str()) > 100 || atof(array[a][b][c][d][4].c_str()) < 0 )
-    {
-    cout << "Final test grade." << endl;
-    cin >> array[a][b][c][d][4];
-    }
-
-    //crunch final numeric
-    float numeric = atof(array[a][b][c][d][2].c_str())*.25 + atof(array[a][b][c][d][3].c_str())*.25 + atof(array[a][b][c][d][4].c_str())*.50 ;
-
-    //turn numeric into string to store into array
-    ostringstream temp;
-    temp << numeric;
-    array[a][b][c][d][5]=temp.str();    
-
-    //get letter grade
-    array[a][b][c][d][6]=getLetter(numeric);
-     
-    } //end d
-      
-    } //end c
-
-  } //end b 
-
-}//end a
-
-
-
-//output info with appropriate labelling.
-for( int a = 0 ; a < 2 ; a++)
-{
-
-  for( int b = 0 ; b < 2 ; b++)
-  {
-
-    for( int c = 0 ; c < 2 ; c++)
-    {
-
-    //grab appropriate headings
-    getInfo(a,b,c);
-
-    for( int d = 0; d < 2 ; d++)
-
-    {
-
-    //output to console
-
-    cout << setw(25) << right << "College: " << left << college << endl;
-    cout << setw(25) << right << "Department: " << left << department << endl;
-    cout << setw(25) << right << "Professor: " << left << professor << endl;
-    cout << setw(25) << right << "Student name: " << left << array[a][b][c][d][0] << endl;
-    cout << setw(25) << right << "Student social: " << left << array[a][b][c][d][1] << endl;
-    cout << setw(25) << right << "First test: " << left << array[a][b][c][d][2] << endl;
-    cout << setw(25) << right << "Second test: " << left << array[a][b][c][d][3] << endl;
-    cout << setw(25) << right << "Final exam: " << left << array[a][b][c][d][4] << endl;
-    cout << setw(25) << right << "Final numeric: " << left << array[a][b][c][d][5] << endl;
-    cout << setw(25) << right << "Final alphabetic: " << left << array[a][b][c][d][6] << endl;
-    cout << setw(25) << "==================================================" << endl;
-
-    //output to file
-
-    ofs << setw(25) << fixed << showpoint << setprecision(2) << right << "College: " << left << college << endl;
-    ofs << setw(25) << fixed << showpoint << setprecision(2) << right << "Department: " << left << department << endl;
-    ofs << setw(25) << fixed << showpoint << setprecision(2) << right << "Professor: " << left << professor << endl;
-    ofs << setw(25) << fixed << showpoint << setprecision(2) << right << "Student Name: " << left << array[a][b][c][d][0] << "\n";
-    ofs << setw(25) << fixed << showpoint << setprecision(2) << right << "Social: " << left << array[a][b][c][d][1] << endl;
-    ofs << setw(25) << fixed << showpoint << setprecision(2) << right << "First Test: " << left <<  array[a][b][c][d][2] << endl;
-    ofs << setw(25) << fixed << showpoint << setprecision(2) << right << "Second Test: " << left <<  array[a][b][c][d][3] << endl;
-    ofs << setw(25) << fixed << showpoint << setprecision(2) << right << "Final Exam: " << left <<  array[a][b][c][d][4] << endl;
-    ofs << setw(25) << fixed << showpoint << setprecision(2) << right << "Numeric Grade: " << left <<  array[a][b][c][d][5] << endl;
-    ofs << setw(25) << fixed << showpoint << setprecision(2) << right << "Letter Grade: " << left << array[a][b][c][d][6] << endl;
-    ofs << setw(25) << fixed << showpoint << setprecision(2) << "==================================================" << endl;
-      
-    }//end d
-    
-    }//end c
-
-  }//end b
-
-}//end a
 
 return 0;
 
 }
+
+void importStudents(array string[2][2][2][2][7])
+{
+
+	//get student info
+	for( int a = 0 ; a < 2 ; a++)
+	{
+
+	  for( int b = 0 ; b < 2 ; b++)
+	  {
+
+	    for( int c = 0 ; c < 2 ; c++)
+	    {
+
+	    //grab appropriate headings
+	    getInfo(a,b,c);
+
+	    for( int d = 0 ; d < 2 ; d++)
+
+	    {
+
+	    //display the branch we're collecting student data for
+	    cout << "College: " << college << "\n"
+	         << "Department: " << department << "\n"
+	         << "Professor: " << professor << "\n";
+
+	    //grab info for the branch
+	    cout << "Student name?" << endl;
+	    cin >> array[a][b][c][d][0];
+	    cout << "Student Social social?" << endl;
+	    cin >> array[a][b][c][d][1];
+
+	    //first grade
+	    array[a][b][c][d][2]="200";
+	    while(atof(array[a][b][c][d][2].c_str()) > 100 || atof(array[a][b][c][d][2].c_str()) < 0 )
+	    {
+	    cout << "First test grade." << endl;
+	    cin >> array[a][b][c][d][2];
+	    }
+
+	    //second grade
+	    array[a][b][c][d][3]="200";
+	    while(atof(array[a][b][c][d][3].c_str()) > 100 || atof(array[a][b][c][d][3].c_str()) < 0 )
+	    {
+	    cout << "Second test grade." << endl;
+	    cin >> array[a][b][c][d][3];
+	    }
+
+	    //final grade
+	    array[a][b][c][d][4]="200";
+	    while(atof(array[a][b][c][d][4].c_str()) > 100 || atof(array[a][b][c][d][4].c_str()) < 0 )
+	    {
+	    cout << "Final test grade." << endl;
+	    cin >> array[a][b][c][d][4];
+	    }
+
+	    //crunch final numeric
+	    float numeric = atof(array[a][b][c][d][2].c_str())*.25 + atof(array[a][b][c][d][3].c_str())*.25 + atof(array[a][b][c][d][4].c_str())*.50 ;
+
+	    //turn numeric into string to store into array
+	    ostringstream temp;
+	    temp << numeric;
+	    array[a][b][c][d][5]=temp.str();
+
+	    //get letter grade
+	    array[a][b][c][d][6]=getLetter(numeric);
+
+	    } //end d
+
+	    } //end c
+
+	  } //end b
+
+	}//end a
+
+}
+
+
+
+void exportStudents(array string[2][2][2][2][7])
+{
+
+	//output info with appropriate labelling.
+	for( int a = 0 ; a < 2 ; a++)
+	{
+
+	  for( int b = 0 ; b < 2 ; b++)
+	  {
+
+	    for( int c = 0 ; c < 2 ; c++)
+	    {
+
+	    //grab appropriate headings
+	    getInfo(a,b,c);
+
+	    for( int d = 0; d < 2 ; d++)
+
+	    {
+
+	    //output to console
+
+	    cout << setw(25) << right << "College: " << left << college << endl;
+	    cout << setw(25) << right << "Department: " << left << department << endl;
+	    cout << setw(25) << right << "Professor: " << left << professor << endl;
+	    cout << setw(25) << right << "Student name: " << left << array[a][b][c][d][0] << endl;
+	    cout << setw(25) << right << "Student social: " << left << array[a][b][c][d][1] << endl;
+	    cout << setw(25) << right << "First test: " << left << array[a][b][c][d][2] << endl;
+	    cout << setw(25) << right << "Second test: " << left << array[a][b][c][d][3] << endl;
+	    cout << setw(25) << right << "Final exam: " << left << array[a][b][c][d][4] << endl;
+	    cout << setw(25) << right << "Final numeric: " << left << array[a][b][c][d][5] << endl;
+	    cout << setw(25) << right << "Final alphabetic: " << left << array[a][b][c][d][6] << endl;
+	    cout << setw(25) << "==================================================" << endl;
+
+	    //output to file
+
+	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "College: " << left << college << endl;
+	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "Department: " << left << department << endl;
+	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "Professor: " << left << professor << endl;
+	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "Student Name: " << left << array[a][b][c][d][0] << "\n";
+	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "Social: " << left << array[a][b][c][d][1] << endl;
+	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "First Test: " << left <<  array[a][b][c][d][2] << endl;
+	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "Second Test: " << left <<  array[a][b][c][d][3] << endl;
+	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "Final Exam: " << left <<  array[a][b][c][d][4] << endl;
+	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "Numeric Grade: " << left <<  array[a][b][c][d][5] << endl;
+	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "Letter Grade: " << left << array[a][b][c][d][6] << endl;
+	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << "==================================================" << endl;
+
+	    }//end d
+
+	    }//end c
+
+	  }//end b
+
+	}//end a
+
+}
+
+
 
 //depending on which branch of our tree structure (expressed via a multidimensional array...?) we're working with, set the data appropriately
 void getInfo(int a,int b,int c)
