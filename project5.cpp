@@ -74,7 +74,7 @@ void importStudents(string array[][2][2][2][6])
 	    array[a][b][c][d][3] = tempName;
 	    ofsImport << tempName << endl;
 
-	    //
+	    //get social
 	    string tempSocial = "0";
 	    while( !verify(tempSocial) )
 	    {
