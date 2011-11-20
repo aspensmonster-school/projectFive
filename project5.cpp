@@ -22,7 +22,7 @@ double getNumeric(double,double,double);
 static string college,department,professor;
 static ofstream ofsImport;
 static ofstream ofsExport;
-string array [2][2][2][2][6] = { "\0" } ;
+string array[2][2][2][2][6];
 
 int main()
 {
@@ -37,7 +37,7 @@ return 0;
 
 }
 
-void importStudents(array string[2][2][2][2][6])
+void importStudents(string array[][2][2][2][6])
 {
 
 	//get student info
@@ -71,7 +71,7 @@ void importStudents(array string[2][2][2][2][6])
 	    cout << "Student name?" << endl;
 	    cin >> array[a][b][c][d][3];
 
-	    std::string tempSocial = "0";
+	    string tempSocial = "0";
 	    while( !verify(tempSocial) )
 	    {
 	    cout << "Student Social social?" << endl;
@@ -132,7 +132,7 @@ void importStudents(array string[2][2][2][2][6])
 
 }
 
-void exportStudents(array string[2][2][2][2][6])
+void exportStudents(string array[][2][2][2][6])
 {
 
 	//output info with appropriate labelling.
@@ -190,10 +190,15 @@ void exportStudents(array string[2][2][2][2][6])
 
 bool verify(string social)
 {
-	string::iterator i;
-	for(i=social.begin() ; i != social.end() ; i++)
+	int length = social.length();
+
+	//make sure we have a string with the proper length like 123-12-1234
+	if(length != 11)
+		return false;
+
+	for(int i=0 ; i < length ; i++)
 	{
-		if( isdigit(social.c_str()[i]) )
+		if( isdigit( social.c_str()[i] ) )
 		{
 			continue;
 		}
