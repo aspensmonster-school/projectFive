@@ -68,8 +68,11 @@ void importStudents(string array[][2][2][2][6])
 	         << "Professor: " << professor << "\n";
 
 	    //grab info for the branch
+	    string tempName;
 	    cout << "Student name?" << endl;
-	    cin >> array[a][b][c][d][3];
+	    cin >> tempName;
+	    array[a][b][c][d][3] = tempName;
+	    ofsImport << tempName << endl;
 
 	    string tempSocial = "0";
 	    while( !verify(tempSocial) )
@@ -77,6 +80,7 @@ void importStudents(string array[][2][2][2][6])
 	    cout << "Student Social social?" << endl;
 	    cin >> tempSocial;
 	    }
+	    ofsImport << tempSocial << endl;
 
 	    array[a][b][c][d][4] = tempSocial;
 
@@ -87,6 +91,7 @@ void importStudents(string array[][2][2][2][6])
 	    cout << "First test grade." << endl;
 	    cin >> tempFirst;
 	    }
+	    ofsImport << tempFirst << endl;
 
 	    //second grade
 	    double tempSecond = -1;
@@ -95,6 +100,7 @@ void importStudents(string array[][2][2][2][6])
 	    cout << "Second test grade." << endl;
 	    cin >> tempSecond;
 	    }
+	    ofsImport << tempSecond << endl;
 
 	    //final grade
 	    double tempFinal = -1;
@@ -103,6 +109,7 @@ void importStudents(string array[][2][2][2][6])
 	    cout << "Final test grade." << endl;
 	    cin >> tempFinal;
 	    }
+	    ofsImport << tempFinal << endl;
 
 	    //crunch final numeric
 	    float numeric = getNumeric(tempFirst, tempSecond, tempFinal);
