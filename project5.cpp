@@ -67,13 +67,14 @@ void importStudents(string array[][2][2][2][6])
 	         << "Department: " << department << "\n"
 	         << "Professor: " << professor << "\n";
 
-	    //grab info for the branch
+	    //get name
 	    string tempName;
 	    cout << "Student name?" << endl;
-	    cin >> tempName;
+	    getline(cin,tempName);
 	    array[a][b][c][d][3] = tempName;
 	    ofsImport << tempName << endl;
 
+	    //
 	    string tempSocial = "0";
 	    while( !verify(tempSocial) )
 	    {
