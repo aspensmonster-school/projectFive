@@ -41,19 +41,19 @@ void importStudents(array string[2][2][2][2][6])
 {
 
 	//get student info
-	for( int a = 0 ; a < 2 ; a++)
+	for( int a = 0 ; a < 1 ; a++)
 	{
 
-	  for( int b = 0 ; b < 2 ; b++)
+	  for( int b = 0 ; b < 1 ; b++)
 	  {
 
-	    for( int c = 0 ; c < 2 ; c++)
+	    for( int c = 0 ; c < 1 ; c++)
 	    {
 
 	    //grab appropriate headings
 	    getInfo(a,b,c);
 
-	    for( int d = 0 ; d < 2 ; d++)
+	    for( int d = 0 ; d < 1 ; d++)
 
 	    {
 
@@ -136,48 +136,46 @@ void exportStudents(array string[2][2][2][2][6])
 {
 
 	//output info with appropriate labelling.
-	for( int a = 0 ; a < 2 ; a++)
+	for( int a = 0 ; a < 1 ; a++)
 	{
 
-	  for( int b = 0 ; b < 2 ; b++)
+	  for( int b = 0 ; b < 1 ; b++)
 	  {
 
-	    for( int c = 0 ; c < 2 ; c++)
+	    for( int c = 0 ; c < 1 ; c++)
 	    {
 
 	    //grab appropriate headings
 	    getInfo(a,b,c);
 
-	    for( int d = 0; d < 2 ; d++)
+	    for( int d = 0; d < 1 ; d++)
 
 	    {
 
 	    //output to console
 
-	    cout << setw(25) << right << "College: " << left << college << endl;
-	    cout << setw(25) << right << "Department: " << left << department << endl;
-	    cout << setw(25) << right << "Professor: " << left << professor << endl;
-	    cout << setw(25) << right << "Student name: " << left << array[a][b][c][d][0] << endl;
-	    cout << setw(25) << right << "Student social: " << left << array[a][b][c][d][1] << endl;
-	    cout << setw(25) << right << "First test: " << left << array[a][b][c][d][2] << endl;
-	    cout << setw(25) << right << "Second test: " << left << array[a][b][c][d][3] << endl;
-	    cout << setw(25) << right << "Final exam: " << left << array[a][b][c][d][4] << endl;
-	    cout << setw(25) << right << "Final numeric: " << left << array[a][b][c][d][5] << endl;
-	    cout << setw(25) << right << "Final alphabetic: " << left << array[a][b][c][d][6] << endl;
+	    //cout << setw(25) << right << "College: " << left << college << endl;
+	    //cout << setw(25) << right << "Department: " << left << department << endl;
+	    //cout << setw(25) << right << "Professor: " << left << professor << endl;
+	    cout << setw(25) << right << "College: " << left << array[a][b][c][d][0] << endl;
+	    cout << setw(25) << right << "Department: " << left << array[a][b][c][d][1] << endl;
+	    cout << setw(25) << right << "Professor: " << left << array[a][b][c][d][2] << endl;
+	    cout << setw(25) << right << "Student Name: " << left << array[a][b][c][d][3] << endl;
+	    cout << setw(25) << right << "Student Social: " << left << array[a][b][c][d][4] << endl;
+	    cout << setw(25) << right << "Grade: " << left << array[a][b][c][d][5] << endl;
 	    cout << setw(25) << "==================================================" << endl;
 
 	    //output to file
 
-	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "College: " << left << college << endl;
-	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "Department: " << left << department << endl;
-	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "Professor: " << left << professor << endl;
-	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "Student Name: " << left << array[a][b][c][d][0] << "\n";
-	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "Social: " << left << array[a][b][c][d][1] << endl;
-	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "First Test: " << left <<  array[a][b][c][d][2] << endl;
-	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "Second Test: " << left <<  array[a][b][c][d][3] << endl;
-	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "Final Exam: " << left <<  array[a][b][c][d][4] << endl;
-	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "Numeric Grade: " << left <<  array[a][b][c][d][5] << endl;
-	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "Letter Grade: " << left << array[a][b][c][d][6] << endl;
+	    //ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "College: " << left << college << endl;
+	    //ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "Department: " << left << department << endl;
+	    //ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "Professor: " << left << professor << endl;
+	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "College: " << left << array[a][b][c][d][0] << "\n";
+	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "Department: " << left << array[a][b][c][d][1] << endl;
+	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "Professor: " << left <<  array[a][b][c][d][2] << endl;
+	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "Student Name: " << left <<  array[a][b][c][d][3] << endl;
+	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "Student Social: " << left <<  array[a][b][c][d][4] << endl;
+	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "Grade: " << left <<  array[a][b][c][d][5] << endl;
 	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << "==================================================" << endl;
 
 	    }//end d
