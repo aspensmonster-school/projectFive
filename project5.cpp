@@ -4,24 +4,25 @@
 #include<sstream> //float to string (ostringstreamObject.str())
 #include<iomanip> //formatting (setw, right, left, etc)
 #include<fstream> //outputting to file
+#include<cctype> //verifying string
 
 using namespace std;
 
-//random comment
-
 //helper functions
-void importStudents(string[2][2][2][2][7]);
-void exportStudents(string[2][2][2][2][7]);
-void getInfo(int,int,int);
-string getLetter(float);
+void importStudents(string[2][2][2][2][6]);
+void exportStudents(string[2][2][2][2][6]);
 bool verify(string);
 bool verify(double);
+void getInfo(int,int,int);
+string getLetter(float);
+double getNumeric(double,double,double);
+
 
 //global info
 static string college,department,professor;
 static ofstream ofsImport;
 static ofstream ofsExport;
-string array [2][2][2][2][7] = { "\0" } ;
+string array [2][2][2][2][6] = { "\0" } ;
 
 int main()
 {
@@ -32,12 +33,11 @@ ofsExport.open("output.txt");
 importStudents(array);
 exportStudents(array);
 
-
 return 0;
 
 }
 
-void importStudents(array string[2][2][2][2][7])
+void importStudents(array string[2][2][2][2][6])
 {
 
 	//get student info
@@ -57,6 +57,11 @@ void importStudents(array string[2][2][2][2][7])
 
 	    {
 
+	    //set info from getInfo into array
+	    array[a][b][c][d][0] = college;
+	    array[a][b][c][d][1] = department;
+	    array[a][b][c][d][2] = professor;
+
 	    //display the branch we're collecting student data for
 	    cout << "College: " << college << "\n"
 	         << "Department: " << department << "\n"
@@ -64,44 +69,58 @@ void importStudents(array string[2][2][2][2][7])
 
 	    //grab info for the branch
 	    cout << "Student name?" << endl;
-	    cin >> array[a][b][c][d][0];
+	    cin >> array[a][b][c][d][3];
+
+	    std::string tempSocial = "0";
+	    while( !verify(tempSocial) )
+	    {
 	    cout << "Student Social social?" << endl;
-	    cin >> array[a][b][c][d][1];
+	    cin >> tempSocial;
+	    }
+
+	    array[a][b][c][d][4] = tempSocial;
 
 	    //first grade
-	    array[a][b][c][d][2]="200";
-	    while(atof(array[a][b][c][d][2].c_str()) > 100 || atof(array[a][b][c][d][2].c_str()) < 0 )
+	    double tempFirst = -1;
+	    while( !verify(tempFirst) )
 	    {
 	    cout << "First test grade." << endl;
-	    cin >> array[a][b][c][d][2];
+	    cin >> tempFirst;
 	    }
 
 	    //second grade
-	    array[a][b][c][d][3]="200";
-	    while(atof(array[a][b][c][d][3].c_str()) > 100 || atof(array[a][b][c][d][3].c_str()) < 0 )
+	    double tempSecond = -1;
+	    while( !verify(tempSecond) )
 	    {
 	    cout << "Second test grade." << endl;
-	    cin >> array[a][b][c][d][3];
+	    cin >> tempSecond;
 	    }
 
 	    //final grade
-	    array[a][b][c][d][4]="200";
-	    while(atof(array[a][b][c][d][4].c_str()) > 100 || atof(array[a][b][c][d][4].c_str()) < 0 )
+	    double tempFinal = -1;
+	    while( !verify(tempFinal) )
 	    {
 	    cout << "Final test grade." << endl;
-	    cin >> array[a][b][c][d][4];
+	    cin >> tempFinal;
 	    }
 
 	    //crunch final numeric
-	    float numeric = atof(array[a][b][c][d][2].c_str())*.25 + atof(array[a][b][c][d][3].c_str())*.25 + atof(array[a][b][c][d][4].c_str())*.50 ;
+	    float numeric = getNumeric(tempFirst, tempSecond, tempFinal);
+
+	    //get letter grade
+	    array[a][b][c][d][5]=getLetter(numeric);
+
+	    /*
+
+	    //Spec update: No longer need to store numeric final grade. Only storing letter grade.
 
 	    //turn numeric into string to store into array
 	    ostringstream temp;
 	    temp << numeric;
 	    array[a][b][c][d][5]=temp.str();
 
-	    //get letter grade
-	    array[a][b][c][d][6]=getLetter(numeric);
+	    */
+
 
 	    } //end d
 
@@ -113,9 +132,7 @@ void importStudents(array string[2][2][2][2][7])
 
 }
 
-
-
-void exportStudents(array string[2][2][2][2][7])
+void exportStudents(array string[2][2][2][2][6])
 {
 
 	//output info with appropriate labelling.
@@ -173,7 +190,31 @@ void exportStudents(array string[2][2][2][2][7])
 
 }
 
+bool verify(string social)
+{
+	string::iterator i;
+	for(i=social.begin() ; i != social.end() ; i++)
+	{
+		if( isdigit(social.c_str()[i]) )
+		{
+			continue;
+		}
+		else if(social.c_str()[i] == '-' && ( i == 3 || i == 6) )
+		{
+			continue;
+		}
+		return false;
 
+	}
+	return true;
+}
+
+bool verify(double grade)
+{
+	if(grade > 100 || grade < 0)
+		return false;
+	return true;
+}
 
 //depending on which branch of our tree structure (expressed via a multidimensional array...?) we're working with, set the data appropriately
 void getInfo(int a,int b,int c)
@@ -265,3 +306,9 @@ string getLetter(float finalNumericGrade)
 
 }
 
+double getNumeric(double test1, double test2, double final)
+{
+
+	return (test1*.25 + test2*.25 + final*.5);
+
+}
