@@ -23,6 +23,7 @@ double getNumeric(double,double,double);
 static ifstream ifs;
 static ofstream ofs;
 vector<struct Student> studentVector;
+//vector<struct Student>::iterator it;
 
 //struct representing a student
 typedef struct Student {
@@ -43,11 +44,33 @@ typedef struct Student {
 int main()
 {
 
-ifs.open("input.txt");
+ifs.open("/home/preston/projectFive/input.txt");
 ofs.open("output.txt");
 
+if(ifs.bad())
+	cout << "Bad bit set" << endl;
+if(ifs.good())
+	cout << "stream is good" << endl;
+
 importStudents();
-exportStudents();
+
+cout << "Now to export. vector size is: " << studentVector.size();
+
+for(int i = 0; i < studentVector.size() ; i++)
+{
+cout << studentVector[i].college << endl;
+cout << studentVector[i].department << endl;
+cout << studentVector[i].professor << endl;
+cout << studentVector[i].studentName << endl;
+cout << studentVector[i].social << endl;
+cout << studentVector[i].firstExam << endl;
+cout << studentVector[i].secondExam << endl;
+cout << studentVector[i].finalExam << endl;
+cout << studentVector[i].finalGradeNumeric << endl;
+cout << studentVector[i].finalGradeLetter << endl;
+}
+
+//exportStudents();
 
 return 0;
 
@@ -56,9 +79,16 @@ return 0;
 void importStudents()
 {
 
+//	it = studentVector.begin();
+
+	cout << "Is it good?" << endl;
+
 	while(ifs.good())
 	{
 		//set vars
+
+		cout << "It's good!" << endl;
+
 		string college;
 		string department;
 		string professor;
@@ -80,9 +110,9 @@ void importStudents()
 		getline(ifs,social,',');
 		getline(ifs,firstExamAlpha,',');
 		getline(ifs,secondExamAlpha,',');
-		getline(ifs,finalExamAlpha,',');
+		getline(ifs,finalExamAlpha,'\n');
 
-		//convert test grades to double
+		//convert test grades to doubles
 
 		firstExam = atof(firstExamAlpha.c_str());
 		secondExam = atof(secondExamAlpha.c_str());
@@ -99,14 +129,32 @@ void importStudents()
 		if(!verify(finalExam))
 			exit(1);
 
+		//crunch final numeric and letter grades
+
+		double finalNumeric = getNumeric(firstExam,secondExam,finalExam);
+		string finalLetter = getLetter(finalNumeric);
+
 		//store all in struct and insert into vector
 
+		Student temp;
 
+		temp.college = college;
+		temp.department = department;
+		temp.professor = professor;
+		temp.studentName = studentName;
+		temp.social = social;
+		temp.firstExam = firstExam;
+		temp.secondExam = secondExam;
+		temp.finalExam = finalExam;
+		temp.finalGradeNumeric = finalNumeric;
+		temp.finalGradeLetter = finalLetter;
+
+		studentVector.push_back(temp);
 
 	}
 
 }
-
+/*
 void exportStudents()
 {
 
@@ -162,6 +210,7 @@ void exportStudents()
 	}//end a
 
 }
+*/
 
 bool verify(string social)
 {
@@ -186,6 +235,7 @@ bool verify(string social)
 	}
 	return true;
 }
+
 
 bool verify(double grade)
 {
