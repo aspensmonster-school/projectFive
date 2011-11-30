@@ -5,12 +5,13 @@
 #include<iomanip> //formatting (setw, right, left, etc)
 #include<fstream> //outputting to file
 #include<cctype> //verifying string
+#include<vector>
 
 using namespace std;
 
 //helper functions
 void importStudents();
-void exportStudents(struct Student []);
+void exportStudents();
 bool verify(string);
 bool verify(double);
 void getInfo(int,int,int);
@@ -19,18 +20,17 @@ double getNumeric(double,double,double);
 
 
 //global info
-//static string college,department,professor;
 static ifstream ifs;
 static ofstream ofs;
-//string array[2][2][2][2][6];
+vector<struct Student> studentVector;
 
-//struct
-
+//struct representing a student
 typedef struct Student {
 
 	string college;
 	string department;
 	string professor;
+	string studentName;
 	string social;
 	double firstExam;
 	double secondExam;
@@ -47,7 +47,7 @@ ifs.open("input.txt");
 ofs.open("output.txt");
 
 importStudents();
-exportStudents(array);
+exportStudents();
 
 return 0;
 
@@ -56,107 +56,58 @@ return 0;
 void importStudents()
 {
 
-	//get student info
-	for( int a = 0 ; a < 2 ; a++)
+	while(ifs.good())
 	{
+		//set vars
+		string college;
+		string department;
+		string professor;
+		string studentName;
+		string social;
+		string firstExamAlpha;
+		double firstExam;
+		string secondExamAlpha;
+		double secondExam;
+		string finalExamAlpha;
+		double finalExam;
 
-	  for( int b = 0 ; b < 2 ; b++)
-	  {
+		//grab data as strings
 
-	    for( int c = 0 ; c < 2 ; c++)
-	    {
+		getline(ifs,college,',');
+		getline(ifs,department,',');
+		getline(ifs,professor,',');
+		getline(ifs,studentName,',');
+		getline(ifs,social,',');
+		getline(ifs,firstExamAlpha,',');
+		getline(ifs,secondExamAlpha,',');
+		getline(ifs,finalExamAlpha,',');
 
-	    //grab appropriate headings
-	    getInfo(a,b,c);
+		//convert test grades to double
 
-	    for( int d = 0 ; d < 2 ; d++)
+		firstExam = atof(firstExamAlpha.c_str());
+		secondExam = atof(secondExamAlpha.c_str());
+		finalExam = atof(finalExamAlpha.c_str());
 
-	    {
+		//detect corruption in input file and exit if it's there
 
-	    //set info from getInfo into array
-	    array[a][b][c][d][0] = college;
-	    array[a][b][c][d][1] = department;
-	    array[a][b][c][d][2] = professor;
+		if(!verify(social))
+			exit(1);
+		if(!verify(firstExam))
+			exit(1);
+		if(!verify(secondExam))
+			exit(1);
+		if(!verify(finalExam))
+			exit(1);
 
-	    //display the branch we're collecting student data for
-	    cout << "College: " << college << "\n"
-	         << "Department: " << department << "\n"
-	         << "Professor: " << professor << "\n";
-
-	    //get name
-	    string tempName;
-	    cout << "Student name?" << endl;
-	    cin >> tempName;
-	    array[a][b][c][d][3] = tempName;
-	    ifs << tempName << endl;
-
-	    //get social
-	    string tempSocial = "0";
-	    while( !verify(tempSocial) )
-	    {
-	    cout << "Student Social social?" << endl;
-	    cin >> tempSocial;
-	    }
-	    ifs << tempSocial << endl;
-
-	    array[a][b][c][d][4] = tempSocial;
-
-	    //first grade
-	    double tempFirst = -1;
-	    while( !verify(tempFirst) )
-	    {
-	    cout << "First test grade." << endl;
-	    cin >> tempFirst;
-	    }
-	    ifs << tempFirst << endl;
-
-	    //second grade
-	    double tempSecond = -1;
-	    while( !verify(tempSecond) )
-	    {
-	    cout << "Second test grade." << endl;
-	    cin >> tempSecond;
-	    }
-	    ifs << tempSecond << endl;
-
-	    //final grade
-	    double tempFinal = -1;
-	    while( !verify(tempFinal) )
-	    {
-	    cout << "Final test grade." << endl;
-	    cin >> tempFinal;
-	    }
-	    ifs << tempFinal << endl;
-
-	    //crunch final numeric
-	    float numeric = getNumeric(tempFirst, tempSecond, tempFinal);
-
-	    //get letter grade
-	    array[a][b][c][d][5]=getLetter(numeric);
-
-	    /*
-
-	    //Spec update: No longer need to store numeric final grade. Only storing letter grade.
-
-	    //turn numeric into string to store into array
-	    ostringstream temp;
-	    temp << numeric;
-	    array[a][b][c][d][5]=temp.str();
-
-	    */
+		//store all in struct and insert into vector
 
 
-	    } //end d
 
-	    } //end c
-
-	  } //end b
-
-	}//end a
+	}
 
 }
 
-void exportStudents(string array[][2][2][2][6])
+void exportStudents()
 {
 
 	//output info with appropriate labelling.
