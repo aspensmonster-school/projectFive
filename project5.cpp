@@ -47,24 +47,7 @@ ifs.open("input.txt");
 ofs.open("output.txt");
 
 importStudents();
-
-cout << "Now to export. vector size is: " << studentVector.size();
-
-for(int i = 0; i < studentVector.size() ; i++)
-{
-cout << studentVector[i].college << endl;
-cout << studentVector[i].department << endl;
-cout << studentVector[i].professor << endl;
-cout << studentVector[i].studentName << endl;
-cout << studentVector[i].social << endl;
-cout << studentVector[i].firstExam << endl;
-cout << studentVector[i].secondExam << endl;
-cout << studentVector[i].finalExam << endl;
-cout << studentVector[i].finalGradeNumeric << endl;
-cout << studentVector[i].finalGradeLetter << endl;
-}
-
-//exportStudents();
+exportStudents();
 
 return 0;
 
@@ -146,63 +129,29 @@ void importStudents()
 	}
 
 }
-/*
+
 void exportStudents()
 {
 
-	//output info with appropriate labelling.
-	for( int a = 0 ; a < 2 ; a++)
-	{
-
-	  for( int b = 0 ; b < 2 ; b++)
-	  {
-
-	    for( int c = 0 ; c < 2 ; c++)
-	    {
-
-	    //grab appropriate headings
-	    getInfo(a,b,c);
-
-	    for( int d = 0; d < 2 ; d++)
-
-	    {
-
-	    //output to console
-
-	    //cout << setw(25) << right << "College: " << left << college << endl;
-	    //cout << setw(25) << right << "Department: " << left << department << endl;
-	    //cout << setw(25) << right << "Professor: " << left << professor << endl;
-	    cout << setw(25) << right << "College: " << left << array[a][b][c][d][0] << endl;
-	    cout << setw(25) << right << "Department: " << left << array[a][b][c][d][1] << endl;
-	    cout << setw(25) << right << "Professor: " << left << array[a][b][c][d][2] << endl;
-	    cout << setw(25) << right << "Student Name: " << left << array[a][b][c][d][3] << endl;
-	    cout << setw(25) << right << "Student Social: " << left << array[a][b][c][d][4] << endl;
-	    cout << setw(25) << right << "Grade: " << left << array[a][b][c][d][5] << endl;
-	    cout << setw(25) << "==================================================" << endl;
-
 	    //output to file
 
-	    //ofs << setw(25) << fixed << showpoint << setprecision(2) << right << "College: " << left << college << endl;
-	    //ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "Department: " << left << department << endl;
-	    //ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "Professor: " << left << professor << endl;
-	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "College: " << left << array[a][b][c][d][0] << "\n";
-	    ofs << setw(25) << fixed << showpoint << setprecision(2) << right << "Department: " << left << array[a][b][c][d][1] << endl;
-	    ofs << setw(25) << fixed << showpoint << setprecision(2) << right << "Professor: " << left <<  array[a][b][c][d][2] << endl;
-	    ofs << setw(25) << fixed << showpoint << setprecision(2) << right << "Student Name: " << left <<  array[a][b][c][d][3] << endl;
-	    ofs << setw(25) << fixed << showpoint << setprecision(2) << right << "Student Social: " << left <<  array[a][b][c][d][4] << endl;
-	    ofs << setw(25) << fixed << showpoint << setprecision(2) << right << "Grade: " << left <<  array[a][b][c][d][5] << endl;
-	    ofs << setw(25) << fixed << showpoint << setprecision(2) << "==================================================" << endl;
-
-	    }//end d
-
-	    }//end c
-
-	  }//end b
-
-	}//end a
+for(int i = 0; i < studentVector.size() ; i++)
+{
+ofs << setw(25) << fixed << showpoint << setprecision(2) << right << "College: " << left <<  studentVector[i].college << endl;
+ofs << setw(25) << fixed << showpoint << setprecision(2) << right << "Department: " << left <<  studentVector[i].department << endl;
+ofs << setw(25) << fixed << showpoint << setprecision(2) << right << "Professor: " << left << studentVector[i].professor << endl;
+ofs << setw(25) << fixed << showpoint << setprecision(2) << right << "Student: " << left <<  studentVector[i].studentName << endl;
+ofs << setw(25) << fixed << showpoint << setprecision(2) << right << "Social: " << left <<  studentVector[i].social << endl;
+ofs << setw(25) << fixed << showpoint << setprecision(2) << right << "First Grade: " << left <<  studentVector[i].firstExam << endl;
+ofs << setw(25) << fixed << showpoint << setprecision(2) << right << "Second Grade: " << left <<  studentVector[i].secondExam << endl;
+ofs << setw(25) << fixed << showpoint << setprecision(2) << right << "Last Grade: " << left <<  studentVector[i].finalExam << endl;
+ofs << setw(25) << fixed << showpoint << setprecision(2) << right << "Final Numeric: " << left <<  studentVector[i].finalGradeNumeric << endl;
+ofs << setw(25) << fixed << showpoint << setprecision(2) << right << "Final Letter: " << left <<  studentVector[i].finalGradeLetter << endl;
+ofs << setw(25) << fixed << showpoint << setprecision(2) << "==================================================" << endl;
+}
 
 }
-*/
+
 
 bool verify(string social)
 {
