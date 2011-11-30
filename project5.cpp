@@ -23,7 +23,6 @@ double getNumeric(double,double,double);
 static ifstream ifs;
 static ofstream ofs;
 vector<struct Student> studentVector;
-//vector<struct Student>::iterator it;
 
 //struct representing a student
 typedef struct Student {
@@ -44,13 +43,8 @@ typedef struct Student {
 int main()
 {
 
-ifs.open("/home/preston/projectFive/input.txt");
+ifs.open("input.txt");
 ofs.open("output.txt");
-
-if(ifs.bad())
-	cout << "Bad bit set" << endl;
-if(ifs.good())
-	cout << "stream is good" << endl;
 
 importStudents();
 
@@ -79,15 +73,9 @@ return 0;
 void importStudents()
 {
 
-//	it = studentVector.begin();
-
-	cout << "Is it good?" << endl;
-
 	while(ifs.good())
 	{
 		//set vars
-
-		cout << "It's good!" << endl;
 
 		string college;
 		string department;
@@ -150,6 +138,10 @@ void importStudents()
 		temp.finalGradeLetter = finalLetter;
 
 		studentVector.push_back(temp);
+
+		//if we're at the end of the file, this function throws the EOF flag and ifs.good() will then return false, ending the loop
+
+		ifs.peek();
 
 	}
 
