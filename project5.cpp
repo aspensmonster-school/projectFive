@@ -9,8 +9,8 @@
 using namespace std;
 
 //helper functions
-void importStudents(string[2][2][2][2][6]);
-void exportStudents(string[2][2][2][2][6]);
+void importStudents();
+void exportStudents(struct Student []);
 bool verify(string);
 bool verify(double);
 void getInfo(int,int,int);
@@ -19,25 +19,41 @@ double getNumeric(double,double,double);
 
 
 //global info
-static string college,department,professor;
-static ofstream ofsImport;
-static ofstream ofsExport;
-string array[2][2][2][2][6];
+//static string college,department,professor;
+static ifstream ifs;
+static ofstream ofs;
+//string array[2][2][2][2][6];
+
+//struct
+
+typedef struct Student {
+
+	string college;
+	string department;
+	string professor;
+	string social;
+	double firstExam;
+	double secondExam;
+	double finalExam;
+	double finalGradeNumeric;
+	string finalGradeLetter;
+
+};
 
 int main()
 {
 
-ofsImport.open("input.txt");
-ofsExport.open("output.txt");
+ifs.open("input.txt");
+ofs.open("output.txt");
 
-importStudents(array);
+importStudents();
 exportStudents(array);
 
 return 0;
 
 }
 
-void importStudents(string array[][2][2][2][6])
+void importStudents()
 {
 
 	//get student info
@@ -72,7 +88,7 @@ void importStudents(string array[][2][2][2][6])
 	    cout << "Student name?" << endl;
 	    cin >> tempName;
 	    array[a][b][c][d][3] = tempName;
-	    ofsImport << tempName << endl;
+	    ifs << tempName << endl;
 
 	    //get social
 	    string tempSocial = "0";
@@ -81,7 +97,7 @@ void importStudents(string array[][2][2][2][6])
 	    cout << "Student Social social?" << endl;
 	    cin >> tempSocial;
 	    }
-	    ofsImport << tempSocial << endl;
+	    ifs << tempSocial << endl;
 
 	    array[a][b][c][d][4] = tempSocial;
 
@@ -92,7 +108,7 @@ void importStudents(string array[][2][2][2][6])
 	    cout << "First test grade." << endl;
 	    cin >> tempFirst;
 	    }
-	    ofsImport << tempFirst << endl;
+	    ifs << tempFirst << endl;
 
 	    //second grade
 	    double tempSecond = -1;
@@ -101,7 +117,7 @@ void importStudents(string array[][2][2][2][6])
 	    cout << "Second test grade." << endl;
 	    cin >> tempSecond;
 	    }
-	    ofsImport << tempSecond << endl;
+	    ifs << tempSecond << endl;
 
 	    //final grade
 	    double tempFinal = -1;
@@ -110,7 +126,7 @@ void importStudents(string array[][2][2][2][6])
 	    cout << "Final test grade." << endl;
 	    cin >> tempFinal;
 	    }
-	    ofsImport << tempFinal << endl;
+	    ifs << tempFinal << endl;
 
 	    //crunch final numeric
 	    float numeric = getNumeric(tempFirst, tempSecond, tempFinal);
@@ -175,16 +191,16 @@ void exportStudents(string array[][2][2][2][6])
 
 	    //output to file
 
-	    //ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "College: " << left << college << endl;
+	    //ofs << setw(25) << fixed << showpoint << setprecision(2) << right << "College: " << left << college << endl;
 	    //ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "Department: " << left << department << endl;
 	    //ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "Professor: " << left << professor << endl;
 	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "College: " << left << array[a][b][c][d][0] << "\n";
-	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "Department: " << left << array[a][b][c][d][1] << endl;
-	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "Professor: " << left <<  array[a][b][c][d][2] << endl;
-	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "Student Name: " << left <<  array[a][b][c][d][3] << endl;
-	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "Student Social: " << left <<  array[a][b][c][d][4] << endl;
-	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << right << "Grade: " << left <<  array[a][b][c][d][5] << endl;
-	    ofsExport << setw(25) << fixed << showpoint << setprecision(2) << "==================================================" << endl;
+	    ofs << setw(25) << fixed << showpoint << setprecision(2) << right << "Department: " << left << array[a][b][c][d][1] << endl;
+	    ofs << setw(25) << fixed << showpoint << setprecision(2) << right << "Professor: " << left <<  array[a][b][c][d][2] << endl;
+	    ofs << setw(25) << fixed << showpoint << setprecision(2) << right << "Student Name: " << left <<  array[a][b][c][d][3] << endl;
+	    ofs << setw(25) << fixed << showpoint << setprecision(2) << right << "Student Social: " << left <<  array[a][b][c][d][4] << endl;
+	    ofs << setw(25) << fixed << showpoint << setprecision(2) << right << "Grade: " << left <<  array[a][b][c][d][5] << endl;
+	    ofs << setw(25) << fixed << showpoint << setprecision(2) << "==================================================" << endl;
 
 	    }//end d
 
@@ -227,63 +243,7 @@ bool verify(double grade)
 	return true;
 }
 
-//depending on which branch of our tree structure (expressed via a multidimensional array...?) we're working with, set the data appropriately
-void getInfo(int a,int b,int c)
-{
-
-    if( a == 0 )
-    {
-      college = "Science and Engineering";
-
-      if( b == 0 )
-      {
-        department = "Computer Science";
-
-        if( c == 0 )
-        	professor = "Dr Moonis Ali";
-        else if( c == 1 )
-        	professor = "Dr Some Guy";
-      }
-      else if( b == 1 )
-      {
-	department = "Mechanical Engineering";
-
-        if( c == 0 )
-                professor = "Dr Mech E Man";
-        else if( c == 1 )
-                professor = "Dr Statics Lover";
-
-      }
-
-    } //end a=0
-    else if( a == 1 )
-    {
-    college = "Mathematics";
-
-      if( b == 0 )
-      {
-       department = "Combinatorics";
-
-        if( c == 0 )
-                professor = "Dr Loves Combinatorics";
-        else if( c == 1 )
-                professor = "Dr Loves Comibnatoircs MORE";
-      }
-      else if( b == 1 )
-      {
-       department = "Graph Theory";
-
-        if( c == 0 )
-                professor = "Dr Cartesian Man";
-        else if( c == 1 )
-                professor = "Dr Polar Man";
-
-      }
-    
-
-    } //end a=1
-
-}
+//no need for getInfo; pulling from input file now.
 
 //report back letter grade
 string getLetter(float finalNumericGrade)
